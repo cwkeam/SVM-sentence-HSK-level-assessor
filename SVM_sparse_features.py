@@ -36,32 +36,14 @@ my_categories = ["1", "2", "3", "4", "5"]
 print("Loading system call database for categories:")
 print(my_categories if my_categories else "all")
 
+txts = ["hsk/1.txt", "hsk/2.txt", "hsk/3.txt", "hsk/4.txt", "hsk/5.txt"]
 
-with open('hsk/1.txt') as f:
-    for line in f:
-        main_corpus.append(line)
-        main_corpus_target.append(1)
-
-with open('hsk/2.txt') as f:
-    for line in f:
-        main_corpus.append(line)
-        main_corpus_target.append(2)
-
-with open('hsk/3.txt') as f:
-    for line in f:
-        main_corpus.append(line)
-        main_corpus_target.append(3)
-
-with open('hsk/4.txt') as f:
-    for line in f:
-        main_corpus.append(line)
-        main_corpus_target.append(4)
-
-with open('hsk/5.txt') as f:
-    for line in f:
-        main_corpus.append(line)
-        main_corpus_target.append(5)
-
+for txt in txts:
+    with open(txt) as f:
+        for b in f:
+            main_corpus += b.split()
+            txt = ''.join([i for i in txt if i.isdigit()])
+            main_corpus_target.append(int(txt))
 
 from sklearn.utils import shuffle
 main_corpus_target, main_corpus = shuffle(main_corpus_target, main_corpus, random_state=0)
@@ -74,7 +56,7 @@ print(len(main_corpus_target))
 def size_mb(docs):
     return sum(len(s.encode('utf-8')) for s in docs) / 1e6
 
-all = False
+all = True
 if all:
     ratio = 25  # training to test set
     train_corpus = main_corpus[:(ratio*len(main_corpus)//(ratio+1))]
