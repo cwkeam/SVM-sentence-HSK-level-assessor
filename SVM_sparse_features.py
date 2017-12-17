@@ -79,7 +79,7 @@ print(len(main_corpus_target))
 def size_mb(docs):
     return sum(len(s.encode('utf-8')) for s in docs) / 1e6
 
-ratio = 21
+ratio = 25  # training to test set
 
 train_corpus = main_corpus[:(ratio*len(main_corpus)//(ratio+1))]
 train_corpus_target = main_corpus_target[:(ratio*len(main_corpus)//(ratio+1))]
@@ -168,10 +168,7 @@ def benchmark(clf):
 results = []
 for clf, name in (
         (RidgeClassifier(tol=1e-2, solver="lsqr"), "Ridge Classifier"),
-        (Perceptron(n_iter=50), "Perceptron"),
-        (PassiveAggressiveClassifier(n_iter=50), "Passive-Aggressive"),
-        (KNeighborsClassifier(n_neighbors=10), "kNN"),
-        (RandomForestClassifier(n_estimators=100), "Random forest")):
+        (Perceptron(n_iter=50), "Perceptron")):
     print('=' * 80)
     print(name)
     results.append(benchmark(clf))
