@@ -25,11 +25,6 @@ from sklearn.utils.extmath import density
 from sklearn import metrics
 
 
-
-import csv, nltk
-from nltk import word_tokenize
-
-
 main_corpus = []
 main_corpus_target = []
 
@@ -103,7 +98,6 @@ print("Extracting features from the training data using a sparse vectorizer...")
 t0 = time()
 
 
-# vectorizer = TfidfVectorizer(ngram_range=(3, 3), min_df=1, use_idf=True, smooth_idf=True) ##############
 import jieba
 
 def tokenize(text):
@@ -157,11 +151,19 @@ def benchmark(clf):
     clf_descr = str(clf).split('(')[0]
 
     print("Predicted hsk levels: ")
-    print(pred);
+    print(pred.tolist());
     print()
     print("Real hsk levels:")
     print(test_corpus_target)
     print()
+    errorArr = []
+    for x in range(0, len(test_corpus_target)-1):
+        a = test_corpus_target[x]
+        b = pred.tolist()[x]
+        errorArr.append((b-a))
+
+    print("Margin of error: ")
+    print(errorArr)
 
     return clf_descr, score, train_time, test_time
 
