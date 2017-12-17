@@ -82,10 +82,14 @@ if all:
     test_corpus = main_corpus[(len(main_corpus)-(len(main_corpus)//(ratio+1))):]
     test_corpus_target = main_corpus_target[(len(main_corpus)-len(main_corpus)//(ratio+1)):]
 else:
+    from cleaner import clean
     train_corpus = main_corpus
     train_corpus_target = main_corpus_target
-    test_corpus = ["有一次，某个动物园里有一只大猩猩被铁笼子里的铁支架压着了，看样子， 压得真不轻，因为大猩猩的表情显得很痛苦。", "我真好"]
-    test_corpus_target = [5, 1]
+    test_corpus = clean([
+        "我叫李明，应聘销售经理。是王小姐让我下午两点半来面试的。"
+        ,
+        "你比他大一岁"])
+    test_corpus_target = [5, 2]
 
 # size of datasets
 train_corpus_size_mb = size_mb(train_corpus)
@@ -112,7 +116,7 @@ def tokenize(text):
 
 vectorizer = TfidfVectorizer(ngram_range=(1, 1), sublinear_tf=True, max_df=0.5, tokenizer=tokenize, use_idf=True, smooth_idf=True)
 analyze = vectorizer.build_analyzer()
-print(analyze("我真好"))
+print(analyze(test_corpus[0]))
 X_train = vectorizer.fit_transform(train_corpus)
 
 
