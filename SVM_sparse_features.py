@@ -74,12 +74,18 @@ print(len(main_corpus_target))
 def size_mb(docs):
     return sum(len(s.encode('utf-8')) for s in docs) / 1e6
 
-ratio = 25  # training to test set
-
-train_corpus = main_corpus[:(ratio*len(main_corpus)//(ratio+1))]
-train_corpus_target = main_corpus_target[:(ratio*len(main_corpus)//(ratio+1))]
-test_corpus = main_corpus[(len(main_corpus)-(len(main_corpus)//(ratio+1))):]
-test_corpus_target = main_corpus_target[(len(main_corpus)-len(main_corpus)//(ratio+1)):]
+all = False
+if all:
+    ratio = 25  # training to test set
+    train_corpus = main_corpus[:(ratio*len(main_corpus)//(ratio+1))]
+    train_corpus_target = main_corpus_target[:(ratio*len(main_corpus)//(ratio+1))]
+    test_corpus = main_corpus[(len(main_corpus)-(len(main_corpus)//(ratio+1))):]
+    test_corpus_target = main_corpus_target[(len(main_corpus)-len(main_corpus)//(ratio+1)):]
+else:
+    train_corpus = main_corpus
+    train_corpus_target = main_corpus_target
+    test_corpus = ["有一次，某个动物园里有一只大猩猩被铁笼子里的铁支架压着了，看样子， 压得真不轻，因为大猩猩的表情显得很痛苦。", "我真好"]
+    test_corpus_target = [5, 1]
 
 # size of datasets
 train_corpus_size_mb = size_mb(train_corpus)
@@ -106,7 +112,7 @@ def tokenize(text):
 
 vectorizer = TfidfVectorizer(ngram_range=(1, 1), sublinear_tf=True, max_df=0.5, tokenizer=tokenize, use_idf=True, smooth_idf=True)
 analyze = vectorizer.build_analyzer()
-print(analyze("你可以坐船去上海"))
+print(analyze("我真好"))
 X_train = vectorizer.fit_transform(train_corpus)
 
 
