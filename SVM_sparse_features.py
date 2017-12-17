@@ -79,7 +79,7 @@ print(len(main_corpus_target))
 def size_mb(docs):
     return sum(len(s.encode('utf-8')) for s in docs) / 1e6
 
-ratio = 20
+ratio = 21
 
 train_corpus = main_corpus[:(ratio*len(main_corpus)//(ratio+1))]
 train_corpus_target = main_corpus_target[:(ratio*len(main_corpus)//(ratio+1))]
@@ -110,7 +110,7 @@ def tokenize(text):
     tokens = jieba.cut(text, cut_all=False)
     return list(tokens)
 
-vectorizer = TfidfVectorizer(sublinear_tf=True, max_df=0.5, stop_words='english', tokenizer=tokenize)
+vectorizer = TfidfVectorizer(ngram_range=(1, 1), sublinear_tf=True, max_df=0.5, tokenizer=tokenize, use_idf=True, smooth_idf=True)
 analyze = vectorizer.build_analyzer()
 print(analyze("你可以坐船去上海"))
 X_train = vectorizer.fit_transform(train_corpus)

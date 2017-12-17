@@ -30,6 +30,13 @@ for dir in list_of_hsk:
             new_str = new_str.replace('：', '')
             new_str = new_str.replace('！', '')
             new_str = new_str.replace(' ', '')
+            new_str = new_str.replace('。', '')
+            new_str = new_str.replace('？', '')
+            new_str = new_str.replace('）', '')
+            new_str = new_str.replace('（', '')
+
+
+
 
             if dir == "hsks_sentences/hsk1.txt":
                 f1.write(new_str)
