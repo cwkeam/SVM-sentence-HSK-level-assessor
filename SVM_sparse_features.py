@@ -39,7 +39,7 @@ print(my_categories if my_categories else "all")
 txts = ["hsk/1.txt", "hsk/2.txt", "hsk/3.txt", "hsk/4.txt", "hsk/5.txt"]
 
 for txt in txts:
-    with open(txt) as f:
+    with open(txt, encoding="utf8") as f:
         for b in f:
             main_corpus += b.split()
             txt = ''.join([i for i in txt if i.isdigit()])
